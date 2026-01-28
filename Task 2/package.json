@@ -1,0 +1,21 @@
+{
+  "name": "user-api",
+  "version": "1.0.0",
+  "description": "REST API pengguna dengan Express dan MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.3.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "mongoose": "^9.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

@@ -106,14 +106,39 @@ form.addEventListener("submit", function (e) {
   const validPassword = validatePassword();
   const validConfirm = validateConfirmPassword();
   if (validFullname && validEmail && validPassword && validConfirm) {
-    successMessage.textContent = "Pendaftaran Berhasil";
-    form.reset();
-    // Hapus error setelah reset
-    setTimeout(() => {
-      fullnameError.textContent = "";
-      emailError.textContent = "";
-      passwordError.textContent = "";
-      confirmPasswordError.textContent = "";
-    }, 100);
+    // Kirim data ke backend Express
+    fetch("http://localhost:3000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: fullname.value,
+        email: email.value,
+        password: password.value,
+      }),
+    })
+      .then(async res => {
+        const data = await res.json();
+        if (res.ok) {
+          successMessage.textContent = "Pendaftaran Berhasil";
+          form.reset();
+          setTimeout(() => {
+            fullnameError.textContent = "";
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            confirmPasswordError.textContent = "";
+          }, 100);
+          console.log(data);
+        } else {
+          // Tampilkan pesan error dari backend
+          if (data.message) {
+            emailError.textContent = data.message;
+          }
+        }
+      })
+      .catch(() => {
+        successMessage.textContent = "Gagal terhubung ke server.";
+      });
   }
 });
